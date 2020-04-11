@@ -1,0 +1,50 @@
+------------------------------------------------------------------------------------------------------
+Error: listen EADDRINUSE: address already in use :::8081
+    at Server.setupListenHandle [as _listen2] (net.js:1308:16)
+    at listenInCluster (net.js:1356:12)
+    at Server.listen (net.js:1444:7)
+    at Server.listen.Server.attach (D:\PROJELER\PERISTAKIP\node_modules\socket.io\lib\index.js:273:9)
+    at dbengine (D:\PROJELER\PERISTAKIP\sql\dbengine.js:14:8)
+    at Object.<anonymous> (D:\PROJELER\PERISTAKIP\server.js:5:41)
+    at Module._compile (internal/modules/cjs/loader.js:1128:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1167:10)
+    at Module.load (internal/modules/cjs/loader.js:983:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:891:14)
+Error: listen EADDRINUSE: address already in use :::8091
+    at Server.setupListenHandle [as _listen2] (net.js:1308:16)
+    at listenInCluster (net.js:1356:12)
+    at Server.listen (net.js:1444:7)
+    at Server.listen.Server.attach (D:\PROJELER\PERISTAKIP\node_modules\socket.io\lib\index.js:273:9)
+    at dbengine (D:\PROJELER\PERISTAKIP\sql\dbengine.js:14:8)
+    at Object.<anonymous> (D:\PROJELER\PERISTAKIP\server.js:5:41)
+    at Module._compile (internal/modules/cjs/loader.js:1128:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1167:10)
+    at Module.load (internal/modules/cjs/loader.js:983:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:891:14)
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+[object Object]
+PERISTAKIP
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
+[object Object]
+------------------------------------------------------------------------------------------------------
