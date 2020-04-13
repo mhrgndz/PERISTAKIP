@@ -52,7 +52,7 @@ io.on('connection', function(socket)
         try
         {
             msql = new _sql(config.server,config.database,config.uid,config.pwd,config.trustedConnection);
-            console.log(pQuery);
+
             msql.QueryPromise(pQuery,function(data)
             {
                 let obj = JSON.parse(data);

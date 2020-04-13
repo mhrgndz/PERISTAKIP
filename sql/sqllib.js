@@ -94,7 +94,6 @@ sqllib.prototype.QueryPromise = function(pQuery,pResult)
 {
     try
     {   
-        console.log(config);
         const pool = new sql.ConnectionPool(config, err => 
         {
             if(err == null)
