@@ -1,3 +1,5 @@
 angular.module('app.controller', [])
 .controller('AnaSayfaCtrl',['$scope','$window','db',AnaSayfaCtrl])
 .controller('PersonelTanimlaCtrl',['$scope','$window','db',PersonelTanimlaCtrl])
+.controller('IsEmriTanimlaCtrl',['$scope','$window','db',IsEmriTanimlaCtrl])
+.controller('IsEmriHareketCtrl',['$scope','$window','db',IsEmriHareketCtrl])

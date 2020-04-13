@@ -1,27 +1,27 @@
-function PersonelTanimlaCtrl($scope,$window,db)
+function IsEmriTanimlaCtrl($scope,$window,db)
 {
-    let PersonelListRow = null;
+    let IsEmriListRow = null;
 
     function Init()
     {
         db.Connection(function(data){});
 
         $scope.Firma = "PERISTAKIP"
-        $scope.PersonelKodu = "";
-        $scope.PersonelAdi = "";
+        $scope.IsEmriKodu = "";
+        $scope.IsEmriAdi = "";
 
-        $scope.PersonelList = [];
+        $scope.IsEmriList = [];
     }
-    function InitPersonelGrid()
+    function InitIsEmriGrid()
     {    
-        $("#TblPersonelList").jsGrid
+        $("#TblIsEmriList").jsGrid
         ({
             
             width: "100%",
             updateOnResize: true,
             heading: true,
             selecting: true,
-            data : $scope.PersonelList,
+            data : $scope.IsEmriList,
             paging : true,
             pageSize: 10,
             pageButtonCount: 3,
@@ -48,7 +48,7 @@ function PersonelTanimlaCtrl($scope,$window,db)
                             return $("<button type='submit' class='btn btn-primary btn-block btn-sm'></button>").text("Seç")
                                 .on("click", function() 
                                 {
-                                    $('#PersonelListele').modal("hide");
+                                    $('#IsEmriListele').modal("hide");
                                 });
                         },
                         width: 50
@@ -57,25 +57,25 @@ function PersonelTanimlaCtrl($scope,$window,db)
             ],
             rowClick: function(args)
             {
-                $scope.PersonelListRowClick(args.itemIndex,args.item);
+                $scope.IsEmriListRowClick(args.itemIndex,args.item);
                 $scope.$apply();
             }, 
         });
     }
-    function PersonelInsert()
+    function IsEmriInsert()
     {
         var InsertData = 
         [
-            $scope.PersonelKodu,
-            $scope.PersonelAdi
+            $scope.IsEmriKodu,
+            $scope.IsEmriAdi
         ];
-        db.ExecuteTag($scope.Firma,'PersonelInsert',InsertData,function(InsertResult)
+        db.ExecuteTag($scope.Firma,'IsEmriInsert',InsertData,function(InsertResult)
         {   
             if(typeof(InsertResult) != 'undefined')
             {
                 alertify.alert("Kayıt İşlemi Başarıyla Gerçekleşti.");
-                $scope.PersonelAdi = "";
-                $scope.PersonelKodu = "";
+                $scope.IsEmriAdi = "";
+                $scope.IsEmriKodu = "";
             }
             else
             {
@@ -83,56 +83,56 @@ function PersonelTanimlaCtrl($scope,$window,db)
             }
         });
     }
-    function PersonelDelete()
+    function IsEmriDelete()
     {
-        db.ExecuteTag($scope.Firma,'PersonelDelete',[$scope.PersonelKodu],async function(InsertResult)
+        db.ExecuteTag($scope.Firma,'IsEmriDelete',[$scope.IsEmriKodu],async function(InsertResult)
         {   
-            $scope.PersonelKodu = "";
-            $scope.PersonelAdi = "";
-            alertify.alert("Personel Başarıyla Silindi.");
+            $scope.IsEmriKodu = "";
+            $scope.IsEmriAdi = "";
+            alertify.alert("İş Emri Başarıyla Silindi.");
         });
     }
-    async function PersonelGetir(pKod)
+    async function IsEmriGetir(pKod)
     {
-        await db.GetPromiseTag($scope.Firma,'PersonelGetir',[pKod],function(Data)
+        await db.GetPromiseTag($scope.Firma,'IsEmriGetir',[pKod],function(Data)
         {
-            $scope.PersonelList = Data;
-            $("#TblPersonelList").jsGrid({data : $scope.PersonelList}); 
+            $scope.IsEmriList = Data;
+            $("#TblIsEmriList").jsGrid({data : $scope.IsEmriList}); 
         });
     }
     $scope.Yeni = function()
     {
         Init();
-        InitPersonelGrid();
+        InitIsEmriGrid();
     }
-    $scope.PersonelListRowClick = function(pIndex,pItem,pObj)
+    $scope.IsEmriListRowClick = function(pIndex,pItem,pObj)
     {
-        if ( PersonelListRow ) { PersonelListRow.children('.jsgrid-cell').css('background-color', '').css('color',''); }
-        var $row = $("#TblPersonelList").jsGrid("rowByItem", pItem);
+        if ( IsEmriListRow ) { IsEmriListRow.children('.jsgrid-cell').css('background-color', '').css('color',''); }
+        var $row = $("#TblIsEmriList").jsGrid("rowByItem", pItem);
         $row.children('.jsgrid-cell').css('background-color','#2979FF').css('color','white');
-        PersonelListRow = $row;
+        IsEmriListRow = $row;
 
-        $scope.PersonelKodu = pItem.KODU
-        $scope.PersonelAdi = pItem.ADI
+        $scope.IsEmriKodu = pItem.KODU
+        $scope.IsEmriAdi = pItem.ADI
     }
-    $scope.BtnPersonelListele =async function()
+    $scope.BtnIsEmriListele =async function()
     {
-        await PersonelGetir('');
-        $('#PersonelListele').modal("show");
+        await IsEmriGetir('');
+        $('#IsEmriListele').modal("show");
     }
     $scope.BtnKaydet = async function()
     {
-        if($scope.PersonelKodu != '' && $scope.PersonelAdi != '')
+        if($scope.IsEmriKodu != '' && $scope.IsEmriAdi != '')
         {
-            await PersonelGetir($scope.PersonelKodu);
+            await IsEmriGetir($scope.IsEmriKodu);
 
-            if($scope.PersonelList.length == 0)
+            if($scope.IsEmriList.length == 0)
             {
-                PersonelInsert();
+                IsEmriInsert();
             }
             else
             {
-                alertify.alert("Girmiş Olduğunuz Personel Kodunda Kayıt Bulunmakta.");
+                alertify.alert("Girmiş Olduğunuz İş Emri Kodunda Kayıt Bulunmakta.");
             }
         }
         else
@@ -140,15 +140,15 @@ function PersonelTanimlaCtrl($scope,$window,db)
             alertify.alert("Lütfen Boş Alanları Doldurunuz.");
         }
     }
-    $scope.BtnPersonelDelete = function()
+    $scope.BtnIsEmriDelete = function()
     {
-        if($scope.PersonelKodu != '')
+        if($scope.IsEmriKodu != '')
         {
-            PersonelDelete();
+            IsEmriDelete();
         }
         else
         {
-            alertify.alert("Silinecek Personel Bulunamadı.");
+            alertify.alert("Silinecek İş Emri Bulunamadı.");
         }
     }
 }
