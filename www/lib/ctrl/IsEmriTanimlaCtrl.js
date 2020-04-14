@@ -4,8 +4,6 @@ function IsEmriTanimlaCtrl($scope,$window,db)
 
     function Init()
     {
-        db.Connection(function(data){});
-
         $scope.Firma = "PERISTAKIP"
         $scope.IsEmriKodu = "";
         $scope.IsEmriAdi = "";

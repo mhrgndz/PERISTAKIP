@@ -4,8 +4,6 @@ function PersonelTanimlaCtrl($scope,$window,db)
 
     function Init()
     {
-        db.Connection(function(data){});
-
         $scope.Firma = "PERISTAKIP"
         $scope.PersonelKodu = "";
         $scope.PersonelAdi = "";

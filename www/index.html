@@ -16,9 +16,11 @@
         <link href="theme/vertical/assets/css/app.min.css" rel="stylesheet" type="text/css" />
         <link href="theme/vertical/jsgrid/css/jsgrid.css" rel="stylesheet">
         <link href="theme/vertical/jsgrid/vendorCSS/jsgrid.css" rel="stylesheet">
+        <link href="theme/vertical/bootstrap-datepicker/bootstrap-datepicker.css"  rel="stylesheet">
+        <link href="theme/vertical/assets/libs/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet">
     </head>
 
-    <body>
+    <body ng-controller="Login">
 
         <!-- Begin page -->
         <div id="wrapper">
@@ -245,21 +247,9 @@
         <script src="theme/vertical/alertify/alertify.js"></script>
         <script src="theme/vertical/jsgrid/tables/jsgrid-db.js"></script>
         <script src="theme/vertical/jsgrid/vendorJS/jsgrid.js"></script>
-
-        <!-- Flot chart -->
-        <!-- <script src="theme/vertical/assets/libs/flot-charts/jquery.flot.js"></script>
-        <script src="theme/vertical/assets/libs/flot-charts/jquery.flot.time.js"></script>
-        <script src="theme/vertical/assets/libs/flot-charts/jquery.flot.tooltip.min.js"></script>
-        <script src="theme/vertical/assets/libs/flot-charts/jquery.flot.resize.js"></script>
-        <script src="theme/vertical/assets/libs/flot-charts/jquery.flot.pie.js"></script>
-        <script src="theme/vertical/assets/libs/flot-charts/jquery.flot.crosshair.js"></script>
-        <script src="theme/vertical/assets/libs/flot-charts/curvedLines.js"></script>
-        <script src="theme/vertical/assets/libs/flot-charts/jquery.flot.axislabels.js"></script> -->
-
-        <!-- KNOB JS -->
-        <!-- <script src="theme/vertical/assets/libs/jquery-knob/jquery.knob.min.js"></script>
-
-        <script src="theme/vertical/assets/js/pages/dashboard.init.js"></script> -->
+        <script src="theme/vertical/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+        <script src="theme/vertical/bootstrap-datepicker.tr.js"></script>
+        <script src="theme/vertical/assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
 
         <!-- App js -->
         <script src="theme/vertical/assets/js/app.min.js"></script>
@@ -270,6 +260,7 @@
         <script src ="lib/ctrl/PersonelTanimlaCtrl.js"></script>
         <script src ="lib/ctrl/IsEmriTanimlaCtrl.js"></script>
         <script src ="lib/ctrl/IsEmriHareketCtrl.js"></script>
+        <script src ="lib/Login.js"></script>
 
         <script src="js/angular.js"></script>
         <script src="js/angular-route.js"></script>
