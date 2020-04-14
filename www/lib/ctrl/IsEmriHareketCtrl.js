@@ -48,38 +48,38 @@ function IsEmriHareketCtrl($scope,$window,db)
                 },
                 {
                     name: "BASTARIH",
-                    title : "BAŞLANGIÇ TARİHİ",
+                    title : "TARİH",
                     type: "text",
                     align: "center",
                     width: 100
                 },
-                {
-                    name: "BITTARIH",
-                    title: "BİTİŞ TARİHİ",
-                    type: "text",
-                    align: "center",
-                    width: 100
-                },
-                {
-                    name: "DURUM",
-                    title: "DURUM",
-                    type: "text",
-                    align: "center",
-                    width: 50
-                },
-                [
-                    { 
-                        itemTemplate: function(_, item) 
-                        {
-                            return $("<button type='submit' class='btn btn-primary btn-block btn-sm'></button>").text("Kapat")
-                                .on("click", function() 
-                                {
-                                    IsEmriHareketUpdate();
-                                });
-                        },
-                        width: 30
-                    }
-                ],
+                // {
+                //     name: "BITTARIH",
+                //     title: "BİTİŞ TARİHİ",
+                //     type: "text",
+                //     align: "center",
+                //     width: 100
+                // },
+                // {
+                //     name: "DURUM",
+                //     title: "DURUM",
+                //     type: "text",
+                //     align: "center",
+                //     width: 50
+                // },
+                // [
+                //     { 
+                //         itemTemplate: function(_, item) 
+                //         {
+                //             return $("<button type='submit' class='btn btn-primary btn-block btn-sm'></button>").text("Kapat")
+                //                 .on("click", function() 
+                //                 {
+                //                     IsEmriHareketUpdate();
+                //                 });
+                //         },
+                //         width: 30
+                //     }
+                // ],
                 [
                     { 
                         itemTemplate: function(_, item) 
