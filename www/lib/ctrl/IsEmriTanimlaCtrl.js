@@ -231,7 +231,7 @@ function IsEmriTanimlaCtrl($scope,$window,db)
     }
     $scope.BtnKaydet = async function()
     {
-        if($scope.IsEmriKodu != '' && $scope.IsEmriAdi != '')
+        if($scope.IsEmriKodu != '' && $scope.IsEmriAdi != '' && $scope.GemiKodu != '')
         {
             await IsEmriGetir($scope.IsEmriKodu);
             await GemiGetir($scope.GemiKodu);

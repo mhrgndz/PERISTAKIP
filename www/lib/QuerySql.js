@@ -52,6 +52,13 @@ var QuerySql =
         type : ['string|25']
     },
     //ISEMRIHAREKET
+    GemiyeBagliIsEmriGetir : 
+    {
+        query : "SELECT KODU AS KODU, GEMIKODU AS GEMIKODU, (SELECT ADI FROM GEMI WHERE KODU = GEMIKODU) AS GEMIADI," +
+                "ADI AS ADI FROM ISEMRI WHERE ((GEMIKODU = @GEMIKODU) OR (@GEMIKODU = '')) ORDER BY KODU",
+        param : ['GEMIKODU'],
+        type : ['string|25']
+    },
     IsEmriHareketGetir : 
     {
         query : "SELECT " +
@@ -60,6 +67,9 @@ var QuerySql =
                 "(SELECT ADI FROM ISEMRI WHERE ISEMRI.KODU = ISEMRIHAREKET.KODU) AS ISEMRIADI, " +
                 "PERKODU AS PERKODU, " +
                 "(SELECT ADI FROM PERSONEL WHERE PERSONEL.KODU = ISEMRIHAREKET.PERKODU) AS PERSONELADI, " +
+                "GEMIKODU AS GEMIKODU, " +
+                "(SELECT ADI FROM GEMI WHERE GEMI.KODU = ISEMRIHAREKET.GEMIKODU) AS GEMIADI, " +
+                "CASE WHEN TIP = 1 THEN 'SÖZLEŞMELİ' WHEN TIP = 2 THEN 'İLAVE' WHEN TIP = 3 THEN 'YEVMİYE' END AS ISTIP, " +
                 "CONVERT(VARCHAR,BASTARIH,102) AS BASTARIH," +
                 "CASE WHEN BITTARIH = '1900.01.01' THEN 'BELİRTİLMEMİŞ' ELSE CONVERT(VARCHAR,BITTARIH,102) END AS BITTARIH, " +
                 "CASE WHEN DURUM = 0 THEN 'AÇIK' WHEN DURUM = 1 THEN 'KAPALI' END AS DURUM FROM ISEMRIHAREKET WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY KODU " ,
@@ -73,15 +83,19 @@ var QuerySql =
                 ",[PERKODU] " +
                 ",[BASTARIH] " +
                 ",[BITTARIH] " + 
-                ",[DURUM]) " +
+                ",[DURUM] " +
+                ",[GEMIKODU] " +
+                ",[TIP]) " +
                 "VALUES " +
                 "(@KODU                     --<KODU, nvarchar(25),> \n" +
                 ",@PERKODU                  --<PERKODU, nvarchar(25),> \n" +
                 ",@BASTARIH                 --<BASTARIH, datetime,> \n" +
                 ",@BITTARIH                 --<BITTARIH, datetime,> \n" +
-                ",@DURUM)                           --<DURUM, int,> " ,
-        param : ['KODU','PERKODU','BASTARIH','BITTARIH','DURUM'],
-        type : ['string|25','string|25','date','date','int']
+                ",@DURUM                    --<DURUM, int,> \n" +
+                ",@GEMIKODU                 --<GEMIKODU, int,> \n" +
+                ",@TIP)                     --<TIP, int,> " ,
+        param : ['KODU','PERKODU','BASTARIH','BITTARIH','DURUM','GEMIKODU','TIP'],
+        type : ['string|25','string|25','date','date','int','string|25','int']
     },
     IsEmriHareketDelete :
     {

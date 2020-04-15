@@ -7,14 +7,17 @@ function IsEmriHareketCtrl($scope,$window,db)
         $scope.Firma = "PERISTAKIP"
         $scope.IsEmriKodu = "0";
         $scope.PersonelKodu = "0";
+        $scope.GemiKodu = "0";
+        $scope.Tip = "0";
         $scope.BasTarih = moment(new Date()).format("DD.MM.YYYY");
-        $scope.BitTarih = "01.01.1900"
+        $scope.BitTarih = moment(new Date()).format("DD.MM.YYYY");
 
         $scope.PersonelList = [];
         $scope.IsEmriList = [];
         $scope.IsEmriHareketList = [];
+        $scope.GemiList = [];
 
-        $scope.IsEmriHareketListSelectedIndex = 0; 
+        $scope.IsEmriHareketListSelectedIndex = 0;
     }
     function InitIsEmriGrid()
     {    
@@ -32,12 +35,18 @@ function IsEmriHareketCtrl($scope,$window,db)
             fields: 
             [
                 {
+                    name: "GEMIADI",
+                    title : "GEMİ ADI",
+                    type: "number",
+                    align: "center",
+                    width: 150
+                },
+                {
                     name: "ISEMRIADI",
                     title : "İŞ EMRİ ADI",
                     type: "number",
                     align: "center",
                     width: 150
-                    
                 },
                 {
                     name: "PERSONELADI",
@@ -45,6 +54,13 @@ function IsEmriHareketCtrl($scope,$window,db)
                     type: "text",
                     align: "center",
                     width: 150
+                },
+                {
+                    name: "ISTIP",
+                    title : "İŞ TİPİ",
+                    type: "text",
+                    align: "center",
+                    width: 100
                 },
                 {
                     name: "BASTARIH",
@@ -90,7 +106,7 @@ function IsEmriHareketCtrl($scope,$window,db)
                                     IsEmriHareketDelete();
                                 });
                         },
-                        width: 30
+                        width: 50
                     }
                 ],
                 
@@ -110,6 +126,20 @@ function IsEmriHareketCtrl($scope,$window,db)
             $("#TblIsEmriList").jsGrid({data : $scope.IsEmriHareketList}); 
         });
     }
+    async function GemiGetir(pKod)
+    {
+        await db.GetPromiseTag($scope.Firma,'GemiGetir',[''],function(Data)
+        {
+            $scope.GemiList = Data;
+        });
+    }
+    async function IsEmriGetir(pKod)
+    {
+        await db.GetPromiseTag($scope.Firma,'GemiyeBagliIsEmriGetir',[pKod],function(Data)
+        {
+            $scope.IsEmriList = Data;
+        });
+    }
     function IsEmriHareketInsert()
     {
         var InsertData = 
@@ -118,7 +148,9 @@ function IsEmriHareketCtrl($scope,$window,db)
             $scope.PersonelKodu,
             $scope.BasTarih,
             $scope.BitTarih,
-            0
+            0,
+            $scope.GemiKodu,
+            $scope.Tip
         ];
         db.ExecuteTag($scope.Firma,'IsEmriHareketInsert',InsertData,function(InsertResult)
         {   
@@ -169,6 +201,11 @@ function IsEmriHareketCtrl($scope,$window,db)
     {
         await IsEmriHareketGetir($scope.IsEmriKodu);
     }
+    $scope.GemiChange =async function()
+    {
+        $scope.IsEmriKodu = "0";
+        await IsEmriGetir($scope.GemiKodu);
+    }
     $scope.IsEmriHareketRowClick = function(pIndex,pItem,pObj)
     {
         if ( IsEmriHareketListRow ) { IsEmriHareketListRow.children('.jsgrid-cell').css('background-color', '').css('color',''); }
@@ -183,11 +220,8 @@ function IsEmriHareketCtrl($scope,$window,db)
     {
         Init();
         InitIsEmriGrid();
+        await GemiGetir();
 
-        await db.GetPromiseTag($scope.Firma,'IsEmriGetir',[''],function(Data)
-        {
-            $scope.IsEmriList = Data;
-        });
         await db.GetPromiseTag($scope.Firma,'PersonelGetir',[''],function(Data)
         {
             $scope.PersonelList = Data;
@@ -195,7 +229,7 @@ function IsEmriHareketCtrl($scope,$window,db)
     }
     $scope.BtnKaydet = async function()
     {
-        if($scope.IsEmriKodu != '0' && $scope.PersonelKodu != '0')
+        if($scope.IsEmriKodu != '0' && $scope.PersonelKodu != '0' && $scope.GemiKodu != '0' && $scope.Tip != '0')
         {
             await IsEmriHareketInsert();
             await IsEmriHareketGetir($scope.IsEmriKodu);

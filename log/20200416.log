@@ -1,0 +1,12 @@
+TypeError: Cannot read property 'match' of null
+    at Immediate.<anonymous> (D:\Mahir Gündüz Projeler\PERISTAKIP\sql\sqllib.js:132:48)
+    at processImmediate (internal/timers.js:458:21)
+------------------------------------------------------------------------------------------------------
+TypeError: Cannot read property 'match' of null
+    at Immediate.<anonymous> (D:\Mahir Gündüz Projeler\PERISTAKIP\sql\sqllib.js:132:48)
+    at processImmediate (internal/timers.js:458:21)
+------------------------------------------------------------------------------------------------------
+TypeError: Cannot read property 'match' of null
+    at Immediate.<anonymous> (D:\Mahir Gündüz Projeler\PERISTAKIP\sql\sqllib.js:132:48)
+    at processImmediate (internal/timers.js:458:21)
+------------------------------------------------------------------------------------------------------
