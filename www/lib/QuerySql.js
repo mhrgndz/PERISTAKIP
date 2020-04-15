@@ -27,7 +27,8 @@ var QuerySql =
     //ISEMRITANIMLA
     IsEmriGetir : 
     {
-        query : "SELECT KODU AS KODU,ADI AS ADI FROM ISEMRI WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY KODU",
+        query : "SELECT KODU AS KODU, GEMIKODU AS GEMIKODU, (SELECT ADI FROM GEMI WHERE KODU = GEMIKODU) AS GEMIADI," +
+                "ADI AS ADI FROM ISEMRI WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY KODU",
         param : ['KODU'],
         type : ['string|25']
     },
@@ -35,12 +36,14 @@ var QuerySql =
     {
         query : "INSERT INTO ISEMRI " +
                 "([KODU] " +
-                ",[ADI]) " +
+                ",[ADI] " +
+                ",[GEMIKODU]) " +
                 "VALUES " +
                 "(@KODU                 --<KODU, nvarchar(25),> \n" +
-                ",@ADI)                  --<ADI, nvarchar(50),> " ,
-        param : ['KODU','ADI'],
-        type : ['string|25','string|50']
+                ",@ADI                  --<ADI, nvarchar(50),> \n" +
+                ",@GEMIKODU)                  --<GEMIKODU, nvarchar(25),> " ,
+        param : ['KODU','ADI','GEMIKODU'],
+        type : ['string|25','string|50','string|25',]
     },
     IsEmriDelete :
     {
@@ -97,6 +100,30 @@ var QuerySql =
         query : "UPDATE ISEMRIHAREKET SET DURUM = @DURUM,BITTARIH = @BITTARIH WHERE KODU = @KODU" ,
         param : ['DURUM','BITTARIH','KODU'],
         type : ['int','date','string|25']
+    },
+    //GEMİ
+    GemiGetir : 
+    {
+        query : "SELECT KODU AS KODU,ADI AS ADI FROM GEMI WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY KODU",
+        param : ['KODU'],
+        type : ['string|25']
+    },
+    GemiInsert :
+    {
+        query : "INSERT INTO GEMI " +
+                "([KODU] " +
+                ",[ADI]) " +
+                "VALUES " +
+                "(@KODU                 --<KODU, nvarchar(25),> \n" +
+                ",@ADI)                  --<ADI, nvarchar(50),> " ,
+        param : ['KODU','ADI'],
+        type : ['string|25','string|50']
+    },
+    GemiDelete :
+    {
+        query : "DELETE FROM GEMI WHERE KODU = @KODU" ,
+        param : ['KODU'],
+        type : ['string|25']
     },
 };
 

@@ -15,6 +15,9 @@ app.config(function($routeProvider) {
     .when("/PersonelTanimla", {
         templateUrl : "html/PersonelTanimla.html"
     })
+    .when("/GemiTanimla", {
+        templateUrl : "html/GemiTanimla.html"
+    })
     .when("/IsEmriTanimla", {
         templateUrl : "html/IsEmriTanimla.html"
     })
