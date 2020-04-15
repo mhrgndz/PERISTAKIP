@@ -10,6 +10,7 @@ function IsEmriTanimlaCtrl($scope,$window,db)
         $scope.IsEmriAdi = "";
         $scope.GemiKodu = "";
         $scope.GemiAdi = "";
+        //$scope.GemiTipi = "0";
 
         $scope.IsEmriList = [];
         $scope.GemiList = [];
@@ -144,6 +145,7 @@ function IsEmriTanimlaCtrl($scope,$window,db)
                 $scope.IsEmriAdi = "";
                 $scope.IsEmriKodu = "";
                 $scope.GemiKodu = "";
+                $scope.GemiAdi = "";
             }
             else
             {
