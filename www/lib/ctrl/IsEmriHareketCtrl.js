@@ -34,6 +34,19 @@ function IsEmriHareketCtrl($scope,$window,db)
             pagerFormat: "{pages} {next} {last}    {pageIndex} of {pageCount}",
             fields: 
             [
+                [
+                    { 
+                        itemTemplate: function(_, item) 
+                        {
+                            return $("<button type='submit' class='btn btn-danger btn-block btn-sm'></button>").text("Sil")
+                                .on("click", function() 
+                                {
+                                    IsEmriHareketDelete();
+                                });
+                        },
+                        width: 50
+                    }
+                ],
                 {
                     name: "GEMIADI",
                     title : "GEMİ ADI",
@@ -96,20 +109,6 @@ function IsEmriHareketCtrl($scope,$window,db)
                 //         width: 30
                 //     }
                 // ],
-                [
-                    { 
-                        itemTemplate: function(_, item) 
-                        {
-                            return $("<button type='submit' class='btn btn-danger btn-block btn-sm'></button>").text("Sil")
-                                .on("click", function() 
-                                {
-                                    IsEmriHareketDelete();
-                                });
-                        },
-                        width: 50
-                    }
-                ],
-                
             ],
             rowClick: function(args)
             {
@@ -118,9 +117,9 @@ function IsEmriHareketCtrl($scope,$window,db)
             }, 
         });
     }
-    async function IsEmriHareketGetir(pKod)
+    async function IsEmriHareketGetir(pKod,pTarih)
     {
-        await db.GetPromiseTag($scope.Firma,'IsEmriHareketGetir',[pKod],function(Data)
+        await db.GetPromiseTag($scope.Firma,'IsEmriHareketGetir',[pKod,pTarih],function(Data)
         {
             $scope.IsEmriHareketList = Data;
             $("#TblIsEmriList").jsGrid({data : $scope.IsEmriHareketList}); 
@@ -133,9 +132,9 @@ function IsEmriHareketCtrl($scope,$window,db)
             $scope.GemiList = Data;
         });
     }
-    async function IsEmriGetir(pKod)
+    async function IsEmriGetir(pKod,pTip)
     {
-        await db.GetPromiseTag($scope.Firma,'GemiyeBagliIsEmriGetir',[pKod],function(Data)
+        await db.GetPromiseTag($scope.Firma,'GemiyeBagliIsEmriGetir',[pKod,pTip],function(Data)
         {
             $scope.IsEmriList = Data;
         });
@@ -175,7 +174,7 @@ function IsEmriHareketCtrl($scope,$window,db)
             db.ExecuteTag($scope.Firma,'IsEmriHareketDelete',[$scope.IsEmriHareketListSelectedItem.UID],async function(InsertResult)
             {   
                 alertify.alert("İş Emri Başarıyla Silindi.");
-                await IsEmriHareketGetir($scope.IsEmriKodu)
+                await IsEmriHareketGetir($scope.IsEmriKodu,$scope.BasTarih)
             });
         }
         ,function(){});
@@ -192,19 +191,28 @@ function IsEmriHareketCtrl($scope,$window,db)
             db.ExecuteTag($scope.Firma,'IsEmriHareketRowUpdate',[1,$scope.BitTarih,$scope.IsEmriHareketListSelectedItem.UID,],async function(InsertResult)
             {   
                 alertify.alert("İş Emri Başarıyla Kapatıldı.");
-                await IsEmriHareketGetir($scope.IsEmriKodu)
+                await IsEmriHareketGetir($scope.IsEmriKodu,$scope.BasTarih)
             });
         }
         ,function(){});
     }
     $scope.IsEmriChange =async function()
     {
-        await IsEmriHareketGetir($scope.IsEmriKodu);
+        await IsEmriHareketGetir($scope.IsEmriKodu,$scope.BasTarih);
     }
-    $scope.GemiChange =async function()
+    $scope.IsTipiChange =async function()
     {
         $scope.IsEmriKodu = "0";
-        await IsEmriGetir($scope.GemiKodu);
+        $scope.PersonelKodu = "0";
+        $scope.BasTarih = $scope.BasTarih = moment(new Date()).format("DD.MM.YYYY");
+        $scope.IsEmriHareketList = [];
+        $("#TblIsEmriList").jsGrid({data : $scope.IsEmriHareketList}); 
+        await IsEmriGetir($scope.GemiKodu,$scope.Tip);
+        
+    }
+    $scope.TarihChange = async function()
+    {
+        await IsEmriHareketGetir($scope.IsEmriKodu,$scope.BasTarih);
     }
     $scope.IsEmriHareketRowClick = function(pIndex,pItem,pObj)
     {
@@ -232,7 +240,7 @@ function IsEmriHareketCtrl($scope,$window,db)
         if($scope.IsEmriKodu != '0' && $scope.PersonelKodu != '0' && $scope.GemiKodu != '0' && $scope.Tip != '0')
         {
             await IsEmriHareketInsert();
-            await IsEmriHareketGetir($scope.IsEmriKodu);
+            await IsEmriHareketGetir($scope.IsEmriKodu,$scope.BasTarih);
         }
         else
         {
@@ -255,7 +263,7 @@ function IsEmriHareketCtrl($scope,$window,db)
             db.ExecuteTag($scope.Firma,'IsEmriHareketUpdate',[1,$scope.BitTarih,$scope.IsEmriKodu],async function(InsertResult)
             {   
                 alertify.alert("İş Emri Başarıyla Kapatıldı.");
-                await IsEmriHareketGetir($scope.IsEmriKodu)
+                await IsEmriHareketGetir($scope.IsEmriKodu,$scope.BasTarih)
             });
         }
         ,function(){});

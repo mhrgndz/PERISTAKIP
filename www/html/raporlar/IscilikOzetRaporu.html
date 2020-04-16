@@ -1,0 +1,60 @@
+<div ng-controller="IscilikOzetRapor" ng-init="Yeni()">
+    <div class="row">
+        <div class="col-12">
+            <div class="card-box py-2">
+                <h1 class="header-title text-center">İşçilik Özet Raporu</h1>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-12">
+            <div class="card-box py-50">
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="simpleinput">Gemi Seçimi <span class="text-dark">*</span></label>
+                    <div class="col-md-4">
+                        <select class="form-control select2" ng-model="GemiKodu" ng-change="GemiChange()">
+                            <option value="0" style="color:black;">Seçim Yapınız</option>
+                            <option ng-repeat="option in GemiList" value="{{option.KODU}}">{{option.ADI}}</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-block btn-primary" ng-click="BtnCalistir()">Çalıştır</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card-box py-2">
+                <div class="text-center mt-4 mb-4">
+                    <div class="row">
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card-box widget-flat border-blue bg-blue text-white">
+                                <i class="fe-tag"></i>
+                                <h3 class="text-white">{{SozlesmeliToplam}}</h3>
+                                <p class="text-uppercase font-13 font-weight-bold">Sözleşmeli Adam/Gün</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card-box bg-primary widget-flat border-primary text-white">
+                                <i class="fe-hard-drive"></i>
+                                <h3 class="text-white">{{YevmiyeToplam}}</h3>
+                                <p class="text-uppercase font-13 font-weight-bold">Yevmiyeli İşler</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card-box bg-danger widget-flat border-danger text-white">
+                                <i class="fe-delete"></i>
+                                <h3 class="text-white">{{Toplam}}</h3>
+                                <p class="text-uppercase font-13 font-weight-bold">TOPLAM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

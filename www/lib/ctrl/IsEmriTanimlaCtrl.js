@@ -10,7 +10,10 @@ function IsEmriTanimlaCtrl($scope,$window,db)
         $scope.IsEmriAdi = "";
         $scope.GemiKodu = "";
         $scope.GemiAdi = "";
-        //$scope.GemiTipi = "0";
+        $scope.Tip = "0";
+        $scope.TlpYevmiye = 0;
+        $scope.OnyYevmiye = 0;
+        $scope.YevmiyeDisabled = true
 
         $scope.IsEmriList = [];
         $scope.GemiList = [];
@@ -31,19 +34,19 @@ function IsEmriTanimlaCtrl($scope,$window,db)
             pagerFormat: "{pages} {next} {last}    {pageIndex} of {pageCount}",
             fields: 
             [
-                {
-                    name: "GEMIKODU",
-                    title: "GEMİ KODU",
-                    type: "text",
-                    align: "center",
-                    width: 100
-                },
-                {
-                    name: "GEMIADI",
-                    title: "GEMİ ADI",
-                    align: "center",
-                    width: 200
-                },
+                [
+                    { 
+                        itemTemplate: function(_, item) 
+                        {
+                            return $("<button type='submit' class='btn btn-primary btn-block btn-sm'></button>").text("Seç")
+                                .on("click", function() 
+                                {
+                                    $('#MdlIsEmriListele').modal("hide");
+                                });
+                        },
+                        width: 75
+                    }
+                ],
                 {
                     name: "KODU",
                     title: "İŞ EMRİ KODU",
@@ -59,19 +62,38 @@ function IsEmriTanimlaCtrl($scope,$window,db)
                     align: "center",
                     width: 200
                 },
-                [
-                    { 
-                        itemTemplate: function(_, item) 
-                        {
-                            return $("<button type='submit' class='btn btn-primary btn-block btn-sm'></button>").text("Seç")
-                                .on("click", function() 
-                                {
-                                    $('#MdlIsEmriListele').modal("hide");
-                                });
-                        },
-                        width: 75
-                    }
-                ],
+                {
+                    name: "ISTIP",
+                    title: "İŞ EMRİ TİPİ",
+                    type: "text",
+                    align: "center",
+                    width: 200
+                },
+                {
+                    name: "GEMIKODU",
+                    title: "GEMİ KODU",
+                    type: "text",
+                    align: "center",
+                    width: 100
+                },
+                {
+                    name: "GEMIADI",
+                    title: "GEMİ ADI",
+                    align: "center",
+                    width: 200
+                },
+                {
+                    name: "TLPYEVMIYE",
+                    title: "TALEP YEVMIYE",
+                    align: "center",
+                    width: 100
+                },
+                {
+                    name: "ONYYEVMIYE",
+                    title: "ONAY YEVMIYE",
+                    align: "center",
+                    width: 100
+                },
             ],
             rowClick: function(args)
             {
@@ -135,17 +157,17 @@ function IsEmriTanimlaCtrl($scope,$window,db)
         [
             $scope.IsEmriKodu,
             $scope.IsEmriAdi,
-            $scope.GemiKodu
+            $scope.GemiKodu,
+            $scope.Tip,
+            $scope.TlpYevmiye,
+            $scope.OnyYevmiye
         ];
         db.ExecuteTag($scope.Firma,'IsEmriInsert',InsertData,function(InsertResult)
         {   
             if(typeof(InsertResult) != 'undefined')
             {
                 alertify.alert("Kayıt İşlemi Başarıyla Gerçekleşti.");
-                $scope.IsEmriAdi = "";
-                $scope.IsEmriKodu = "";
-                $scope.GemiKodu = "";
-                $scope.GemiAdi = "";
+                $scope.Yeni();
             }
             else
             {
@@ -161,7 +183,24 @@ function IsEmriTanimlaCtrl($scope,$window,db)
             $scope.IsEmriAdi = "";
             $scope.GemiKodu = "";
             $scope.GemiAdi = "";
+            $scope.Tip = "0";
             alertify.alert("İş Emri Başarıyla Silindi.");
+        });
+    }
+    function IsEmriUpdate()
+    {
+        var TmpQuery = 
+        {
+            query : "UPDATE ISEMRI SET TLPYEVMIYE = @TLPYEVMIYE,ONYYEVMIYE = @ONYYEVMIYE WHERE KODU = @KODU " ,
+            param : ['TLPYEVMIYE','ONYYEVMIYE','KODU'],
+            type : ['int','int','string|25'],
+            value:  [$scope.TlpYevmiye,$scope.OnyYevmiye,$scope.IsEmriKodu]
+        }
+
+        db.ExecuteQuery(TmpQuery,async function(UpdateResult)
+        {   
+            await IsEmriGetir($scope.IsEmriKodu);
+            alertify.alert("İş Emri Başarıyla Güncellendi.");
         });
     }
     async function IsEmriGetir(pKod)
@@ -192,11 +231,23 @@ function IsEmriTanimlaCtrl($scope,$window,db)
         var $row = $("#TblIsEmriList").jsGrid("rowByItem", pItem);
         $row.children('.jsgrid-cell').css('background-color','#2979FF').css('color','white');
         IsEmriListRow = $row;
+    
+        if(pItem.TIP == "3")
+        {
+            $scope.YevmiyeDisabled = false
+        }
+        else
+        {
+            $scope.YevmiyeDisabled = true
+        }
 
         $scope.IsEmriKodu = pItem.KODU
         $scope.IsEmriAdi = pItem.ADI
         $scope.GemiKodu = pItem.GEMIKODU
         $scope.GemiAdi = pItem.GEMIADI
+        $scope.TlpYevmiye = pItem.TLPYEVMIYE
+        $scope.OnyYevmiye = pItem.ONYYEVMIYE
+        $scope.Tip = pItem.TIP.toString()
     }
     $scope.GemiListRowClick = function(pIndex,pItem,pObj)
     {
@@ -207,6 +258,17 @@ function IsEmriTanimlaCtrl($scope,$window,db)
 
         $scope.GemiKodu = pItem.KODU
         $scope.GemiAdi = pItem.ADI
+    }
+    $scope.YevmiyeChange = function()
+    {
+        if($scope.Tip == "3")
+        {
+            $scope.YevmiyeDisabled = false
+        }
+        else
+        {
+            $scope.YevmiyeDisabled = true
+        }
     }
     $scope.BtnIsEmriListele =async function()
     {
@@ -255,6 +317,17 @@ function IsEmriTanimlaCtrl($scope,$window,db)
         else
         {
             alertify.alert("Lütfen Boş Alanları Doldurunuz.");
+        }
+    }
+    $scope.BtnGuncelle = async function()
+    {
+        if($scope.IsEmriKodu != '')
+        {
+            IsEmriUpdate();
+        }
+        else
+        {
+            alertify.alert("Güncellenecek İş Emri Bulunamadı.");
         }
     }
 }

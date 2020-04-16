@@ -27,7 +27,12 @@ var QuerySql =
     //ISEMRITANIMLA
     IsEmriGetir : 
     {
-        query : "SELECT KODU AS KODU, GEMIKODU AS GEMIKODU, (SELECT ADI FROM GEMI WHERE KODU = GEMIKODU) AS GEMIADI," +
+        query : "SELECT KODU AS KODU, GEMIKODU AS GEMIKODU, " +
+                "TIP AS TIP, " +
+                "TLPYEVMIYE AS TLPYEVMIYE, " +
+                "ONYYEVMIYE AS ONYYEVMIYE, " +
+                "CASE WHEN TIP = 1 THEN 'SÖZLEŞMELİ' WHEN TIP = 2 THEN 'İLAVE' WHEN TIP = 3 THEN 'YEVMİYE' END AS ISTIP, " +
+                "(SELECT ADI FROM GEMI WHERE KODU = GEMIKODU) AS GEMIADI," +
                 "ADI AS ADI FROM ISEMRI WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY KODU",
         param : ['KODU'],
         type : ['string|25']
@@ -37,13 +42,19 @@ var QuerySql =
         query : "INSERT INTO ISEMRI " +
                 "([KODU] " +
                 ",[ADI] " +
-                ",[GEMIKODU]) " +
+                ",[GEMIKODU] " +
+                ",[TIP] " +
+                ",[TLPYEVMIYE] " +
+                ",[ONYYEVMIYE]) " +
                 "VALUES " +
                 "(@KODU                 --<KODU, nvarchar(25),> \n" +
                 ",@ADI                  --<ADI, nvarchar(50),> \n" +
-                ",@GEMIKODU)                  --<GEMIKODU, nvarchar(25),> " ,
-        param : ['KODU','ADI','GEMIKODU'],
-        type : ['string|25','string|50','string|25',]
+                ",@GEMIKODU                  --<GEMIKODU, nvarchar(25),> \n" +
+                ",@TIP                  --<TIP, int,> \n" +
+                ",@TLPYEVMIYE                 --<TIP, int,> \n" +
+                ",@ONYYEVMIYE)                  --<TIP, int,> " ,
+        param : ['KODU','ADI','GEMIKODU','TIP','TLPYEVMIYE','ONYYEVMIYE'],
+        type : ['string|25','string|50','string|25','int','int','int']
     },
     IsEmriDelete :
     {
@@ -51,13 +62,19 @@ var QuerySql =
         param : ['KODU'],
         type : ['string|25']
     },
+    IsEmriUpdate :
+    {
+        query : "UPDATE ISEMRI SET TLPYEVMIYE = @TLPYEVMIYE,ONYYEVMIYE = @ONYYEVMIYE WHERE KODU = @KODU " ,
+        param : ['TLPYEVMIYE','ONYYEVMIYE','KODU'],
+        type : ['int','int','string|25']
+    },
     //ISEMRIHAREKET
     GemiyeBagliIsEmriGetir : 
     {
         query : "SELECT KODU AS KODU, GEMIKODU AS GEMIKODU, (SELECT ADI FROM GEMI WHERE KODU = GEMIKODU) AS GEMIADI," +
-                "ADI AS ADI FROM ISEMRI WHERE ((GEMIKODU = @GEMIKODU) OR (@GEMIKODU = '')) ORDER BY KODU",
-        param : ['GEMIKODU'],
-        type : ['string|25']
+                "ADI AS ADI FROM ISEMRI WHERE ((GEMIKODU = @GEMIKODU) OR (@GEMIKODU = '')) AND ((TIP = @TIP) OR (@TIP = ''))  ORDER BY KODU",
+        param : ['GEMIKODU','TIP'],
+        type : ['string|25','int']
     },
     IsEmriHareketGetir : 
     {
@@ -72,9 +89,10 @@ var QuerySql =
                 "CASE WHEN TIP = 1 THEN 'SÖZLEŞMELİ' WHEN TIP = 2 THEN 'İLAVE' WHEN TIP = 3 THEN 'YEVMİYE' END AS ISTIP, " +
                 "CONVERT(VARCHAR,BASTARIH,102) AS BASTARIH," +
                 "CASE WHEN BITTARIH = '1900.01.01' THEN 'BELİRTİLMEMİŞ' ELSE CONVERT(VARCHAR,BITTARIH,102) END AS BITTARIH, " +
-                "CASE WHEN DURUM = 0 THEN 'AÇIK' WHEN DURUM = 1 THEN 'KAPALI' END AS DURUM FROM ISEMRIHAREKET WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY KODU " ,
-        param : ['KODU'],
-        type : ['string|25']
+                "CASE WHEN DURUM = 0 THEN 'AÇIK' WHEN DURUM = 1 THEN 'KAPALI' END AS DURUM " +
+                "FROM ISEMRIHAREKET WHERE ((KODU = @KODU) OR (@KODU = '')) AND BASTARIH = @BASTARIH ORDER BY KODU " ,
+        param : ['KODU','BASTARIH'],
+        type : ['string|25','date']
     },
     IsEmriHareketInsert : 
     {

@@ -36,31 +36,46 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="form-group row">
-                            <label class="col-md-2 col-form-label" for="simpleinput">Gemi Tipi <span class="text-dark">*</span></label>
-                            <select class="col-md-10 form-control select2 " ng-model="GemiTipi">
-                                <option value="0" style="color:black;">Seçim Yapınız</option>
-                                <option value="1">Sözleşmeli</option>
-                                <option value="2">İlave</option>
-                                <option value="3">Yevmiye</option>
-                            </select>
-                        </div> -->
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="simpleinput">İş Tipi Seçimi <span class="text-dark">*</span></label>
+                            <div class="col-md-10">
+                                <select class="form-control select2 " ng-model="Tip" ng-change = "YevmiyeChange()">
+                                    <option value="0" style="color:black;">Seçim Yapınız</option>
+                                    <option value="1">SÖZLEŞMELİ</option>
+                                    <option value="2">İLAVE</option>
+                                    <option value="3">YEVMİYE</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" for="simpleinput">İş Emri Adı <span class="text-dark">*</span></label>
                             <div class="col-md-10">
                                 <input type="text"  class="form-control" ng-model="IsEmriAdi">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="simpleinput">Talep Edilen Yevmiye<span class="text-dark">*</span></label>
+                            <div class="col-md-4">
+                                <input type="text"  class="form-control" ng-model="TlpYevmiye" ng-disabled = "YevmiyeDisabled">
+                            </div>
+                            <label class="col-md-2 col-form-label" for="simpleinput">Onaylanan Yevmiye<span class="text-dark">*</span></label>
+                            <div class="col-md-4">
+                                <input type="text"  class="form-control" ng-model="OnyYevmiye" ng-disabled = "YevmiyeDisabled">
+                            </div>
+                        </div>
                         <br>
                         <br>
                         <div class="form-group row">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <button type="submit" class="btn btn-block btn-primary" ng-click="BtnKaydet()">Kaydet</button>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <button type="submit" class="btn btn-block btn-primary" ng-click="Yeni()">Yeni</button>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-block btn-primary" ng-click="BtnGuncelle()">Güncelle</button>
+                            </div>
+                            <div class="col-3">
                                 <button type="submit" class="btn btn-block btn-primary" ng-click="BtnIsEmriDelete()">Sil</button>
                             </div>
                         </div>
@@ -70,8 +85,8 @@
         </div>
     </div>
     <!-- MODAL -->
-    <div class="modal fade bs-example-modal-lg" id="MdlIsEmriListele" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade  bs-example-modal-xl" id="MdlIsEmriListele" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myLargeModalLabel">İş Emri Listesi</h4>

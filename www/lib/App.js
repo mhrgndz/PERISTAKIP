@@ -24,4 +24,7 @@ app.config(function($routeProvider) {
     .when("/IsEmriHareket", {
         templateUrl : "html/IsEmriHareket.html"
     })
+    .when("/IscilikOzetRaporu", {
+        templateUrl : "html/raporlar/IscilikOzetRaporu.html"
+    })
 });

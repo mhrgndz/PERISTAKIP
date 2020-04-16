@@ -10,3 +10,19 @@ TypeError: Cannot read property 'match' of null
     at Immediate.<anonymous> (D:\Mahir Gündüz Projeler\PERISTAKIP\sql\sqllib.js:132:48)
     at processImmediate (internal/timers.js:458:21)
 ------------------------------------------------------------------------------------------------------
+TypeError: Cannot read property 'length' of undefined
+    at Immediate.<anonymous> (D:\Mahir Gündüz Projeler\PERISTAKIP\node_modules\mssql\lib\msnodesqlv8\request.js:233:19)
+    at processImmediate (internal/timers.js:456:21)
+------------------------------------------------------------------------------------------------------
+TypeError: Cannot read property 'length' of undefined
+    at Immediate.<anonymous> (D:\Mahir Gündüz Projeler\PERISTAKIP\node_modules\mssql\lib\msnodesqlv8\request.js:233:19)
+    at processImmediate (internal/timers.js:456:21)
+------------------------------------------------------------------------------------------------------
+TypeError: Cannot read property 'length' of undefined
+    at Immediate.<anonymous> (D:\Mahir Gündüz Projeler\PERISTAKIP\node_modules\mssql\lib\msnodesqlv8\request.js:233:19)
+    at processImmediate (internal/timers.js:456:21)
+------------------------------------------------------------------------------------------------------
+TypeError: Cannot read property 'length' of undefined
+    at Immediate.<anonymous> (D:\Mahir Gündüz Projeler\PERISTAKIP\node_modules\mssql\lib\msnodesqlv8\request.js:233:19)
+    at processImmediate (internal/timers.js:456:21)
+------------------------------------------------------------------------------------------------------
