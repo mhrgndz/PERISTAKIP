@@ -34,19 +34,7 @@ function IsEmriTanimlaCtrl($scope,$window,db)
             pagerFormat: "{pages} {next} {last}    {pageIndex} of {pageCount}",
             fields: 
             [
-                [
-                    { 
-                        itemTemplate: function(_, item) 
-                        {
-                            return $("<button type='submit' class='btn btn-primary btn-block btn-sm'></button>").text("Seç")
-                                .on("click", function() 
-                                {
-                                    $('#MdlIsEmriListele').modal("hide");
-                                });
-                        },
-                        width: 75
-                    }
-                ],
+                
                 {
                     name: "KODU",
                     title: "İŞ EMRİ KODU",
@@ -94,6 +82,19 @@ function IsEmriTanimlaCtrl($scope,$window,db)
                     align: "center",
                     width: 100
                 },
+                [
+                    { 
+                        itemTemplate: function(_, item) 
+                        {
+                            return $("<button type='submit' class='btn btn-primary btn-block btn-sm'></button>").text("Seç")
+                                .on("click", function() 
+                                {
+                                    $('#MdlIsEmriListele').modal("hide");
+                                });
+                        },
+                        width: 75
+                    }
+                ],
             ],
             rowClick: function(args)
             {

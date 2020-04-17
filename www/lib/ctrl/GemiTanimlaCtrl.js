@@ -14,7 +14,6 @@ function GemiTanimlaCtrl($scope,$window,db)
     {    
         $("#TblGemiList").jsGrid
         ({
-            
             width: "100%",
             updateOnResize: true,
             heading: true,
@@ -26,6 +25,18 @@ function GemiTanimlaCtrl($scope,$window,db)
             pagerFormat: "{pages} {next} {last}    {pageIndex} of {pageCount}",
             fields: 
             [
+                {
+                    name: "KODU",
+                    type: "number",
+                    align: "center",
+                    width: 100
+                },
+                {
+                    name: "ADI",
+                    type: "text",
+                    align: "center",
+                    width: 300
+                },
                 [
                     { 
                         itemTemplate: function(_, item) 
@@ -39,18 +50,6 @@ function GemiTanimlaCtrl($scope,$window,db)
                         width: 50
                     }
                 ],
-                {
-                    name: "KODU",
-                    type: "number",
-                    align: "center",
-                    width: 100
-                },
-                {
-                    name: "ADI",
-                    type: "text",
-                    align: "center",
-                    width: 300
-                },
             ],
             rowClick: function(args)
             {

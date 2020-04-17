@@ -34,19 +34,6 @@ function IsEmriHareketCtrl($scope,$window,db)
             pagerFormat: "{pages} {next} {last}    {pageIndex} of {pageCount}",
             fields: 
             [
-                [
-                    { 
-                        itemTemplate: function(_, item) 
-                        {
-                            return $("<button type='submit' class='btn btn-danger btn-block btn-sm'></button>").text("Sil")
-                                .on("click", function() 
-                                {
-                                    IsEmriHareketDelete();
-                                });
-                        },
-                        width: 50
-                    }
-                ],
                 {
                     name: "GEMIADI",
                     title : "GEMİ ADI",
@@ -82,6 +69,19 @@ function IsEmriHareketCtrl($scope,$window,db)
                     align: "center",
                     width: 100
                 },
+                [
+                    { 
+                        itemTemplate: function(_, item) 
+                        {
+                            return $("<button type='submit' class='btn btn-danger btn-block btn-sm'></button>").text("Sil")
+                                .on("click", function() 
+                                {
+                                    IsEmriHareketDelete();
+                                });
+                        },
+                        width: 50
+                    }
+                ],
                 // {
                 //     name: "BITTARIH",
                 //     title: "BİTİŞ TARİHİ",

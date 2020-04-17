@@ -1,5 +1,7 @@
 function IscilikOzetRapor($scope,$window,db)
 {
+    let YevmiyeListRow = null;
+
     function Init()
     {
         $scope.Firma = "PERISTAKIP"
@@ -11,6 +13,240 @@ function IscilikOzetRapor($scope,$window,db)
 
         $scope.GemiList = [];
         $scope.RaporList = [];
+        $scope.YevmiyeList = [];
+        $scope.SozlesmeliList = [];
+        $scope.YevmiyeDetayList = [];
+        $scope.SozlesmeliDetayList = [];
+    }
+    function InitYevmiyeGrid()
+    {    
+        $("#TblYevmiyeGrid").jsGrid
+        ({
+            width: "100%",
+            updateOnResize: true,
+            heading: true,
+            selecting: true,
+            data : $scope.YevmiyeList,
+            paging : true,
+            pageSize: 10,
+            pageButtonCount: 3,
+            pagerFormat: "{pages} {next} {last}    {pageIndex} of {pageCount}",
+            fields: 
+            [
+                {
+                    name: "TARIH",
+                    title : "AY",
+                    type: "number",
+                    align: "center",
+                    width: 50
+                },
+                {
+                    name: "KODU",
+                    title : "KODU",
+                    type: "number",
+                    align: "center",
+                    width: 150
+                },
+                {
+                    name: "ISEMRIADI",
+                    title : "İŞ EMRİ ADI",
+                    type: "text",
+                    align: "center",
+                    width: 150
+                },
+                {
+                    name: "YEVMIYE",
+                    title : "YEVMIYE",
+                    type: "text",
+                    align: "center",
+                    width: 100
+                },
+                {
+                    name: "TALEPYEVMIYE",
+                    title : "TALEP YEVMIYE",
+                    type: "text",
+                    align: "center",
+                    width: 100
+                },
+                {
+                    name: "ONAYLANANYEVMIYE",
+                    title : "ONAY YEVMIYE",
+                    type: "text",
+                    align: "center",
+                    width: 100
+                },
+                [
+                    { 
+                        itemTemplate: function(_, item) 
+                        {
+                            return $("<button type='submit' class='btn btn-primary btn-block btn-sm'></button>").text("Detay")
+                                .on("click", function() 
+                                {
+                                    $('#MdlYevmiyeDetay').modal("show");
+                                });
+                        },
+                        width: 50
+                    }
+                ],
+            ],
+            rowClick: function(args)
+            {
+                $scope.YevmiyeListRowClick(args.itemIndex,args.item);
+                $scope.$apply();
+            }, 
+        });
+    }
+    function InitYevmiyeDetayGrid()
+    {    
+        $("#TblYevmiyeDetay").jsGrid
+        ({
+            width: "100%",
+            updateOnResize: true,
+            heading: true,
+            selecting: true,
+            data : $scope.YevmiyeList,
+            paging : true,
+            pageSize: 10,
+            pageButtonCount: 3,
+            pagerFormat: "{pages} {next} {last}    {pageIndex} of {pageCount}",
+            fields: 
+            [
+                {
+                    name: "PERKODU",
+                    title : "PERSONEL KODU",
+                    type: "number",
+                    align: "center",
+                    width: 50
+                },
+                {
+                    name: "PERSONELADI",
+                    title : "PERSONEL ADI",
+                    type: "number",
+                    align: "center",
+                    width: 150
+                },
+                {
+                    name: "TARIH",
+                    title : "TARIH",
+                    type: "number",
+                    align: "center",
+                    width: 80
+                },
+            ],
+            rowClick: function(args)
+            {
+                $scope.YevmiyeListRowClick(args.itemIndex,args.item);
+                $scope.$apply();
+            }, 
+        });
+    }
+    function InitSozlesmeliGrid()
+    {    
+        $("#TblSozlesmeliGrid").jsGrid
+        ({
+            width: "100%",
+            updateOnResize: true,
+            heading: true,
+            selecting: true,
+            data : $scope.YevmiyeList,
+            paging : true,
+            pageSize: 10,
+            pageButtonCount: 3,
+            pagerFormat: "{pages} {next} {last}    {pageIndex} of {pageCount}",
+            fields: 
+            [
+                {
+                    name: "TARIH",
+                    title : "AY",
+                    type: "number",
+                    align: "center",
+                    width: 50
+                },
+                {
+                    name: "KODU",
+                    title : "KODU",
+                    type: "number",
+                    align: "center",
+                    width: 150
+                },
+                {
+                    name: "ISEMRIADI",
+                    title : "İŞ EMRİ ADI",
+                    type: "text",
+                    align: "center",
+                    width: 150
+                },
+                {
+                    name: "SOZLESMELI",
+                    title : "SÖZLEŞMELİ",
+                    type: "text",
+                    align: "center",
+                    width: 100
+                },
+                [
+                    { 
+                        itemTemplate: function(_, item) 
+                        {
+                            return $("<button type='submit' class='btn btn-primary btn-block btn-sm'></button>").text("Detay")
+                                .on("click", function() 
+                                {
+                                    $('#MdlSozlemeliDetay').modal("show");
+                                });
+                        },
+                        width: 50
+                    }
+                ],
+            ],
+            rowClick: function(args)
+            {
+                $scope.SozlemeliListRowClick(args.itemIndex,args.item);
+                $scope.$apply();
+            }, 
+        });
+    }
+    function InitSozlesmeliDetayGrid()
+    {    
+        $("#TblSozlesmeliDetay").jsGrid
+        ({
+            width: "100%",
+            updateOnResize: true,
+            heading: true,
+            selecting: true,
+            data : $scope.SozlesmeliDetayList,
+            paging : true,
+            pageSize: 10,
+            pageButtonCount: 3,
+            pagerFormat: "{pages} {next} {last}    {pageIndex} of {pageCount}",
+            fields: 
+            [
+                {
+                    name: "PERKODU",
+                    title : "PERSONEL KODU",
+                    type: "number",
+                    align: "center",
+                    width: 50
+                },
+                {
+                    name: "PERSONELADI",
+                    title : "PERSONEL ADI",
+                    type: "number",
+                    align: "center",
+                    width: 150
+                },
+                {
+                    name: "TARIH",
+                    title : "TARIH",
+                    type: "number",
+                    align: "center",
+                    width: 80
+                },
+            ],
+            rowClick: function(args)
+            {
+                $scope.SozlemeliListRowClick(args.itemIndex,args.item);
+                $scope.$apply();
+            }, 
+        });
     }
     async function GemiGetir(pKod)
     {
@@ -32,15 +268,54 @@ function IscilikOzetRapor($scope,$window,db)
             type : ['string|25'],
             value:  [$scope.GemiKodu]
         }
-
         db.GetDataQuery(TmpQuery,async function(Data)
         {   
             $scope.RaporList = Data
             if($scope.RaporList.length > 0)
             {
-                $scope.SozlesmeliToplam = $scope.RaporList[0].TOPLAM
-                $scope.YevmiyeToplam = $scope.RaporList[1].TOPLAM
+                $scope.SozlesmeliToplam = db.SumColumn($scope.RaporList,"TOPLAM","TIP = 1")
+                $scope.YevmiyeToplam = db.SumColumn($scope.RaporList,"TOPLAM","TIP = 3")
                 $scope.Toplam = $scope.SozlesmeliToplam + $scope.YevmiyeToplam;
+
+                //YEVMİYE
+                var TmpQuery = 
+                {
+                    query : "SELECT " +
+                            "KODU AS KODU, " +
+                            "(SELECT ADI FROM ISEMRI WHERE KODU = ISEMRIHAREKET.KODU) AS ISEMRIADI, " +
+                            "MONTH(BASTARIH) AS TARIH, " +
+                            "COUNT(KODU) AS YEVMIYE, " +
+                            "(SELECT TLPYEVMIYE FROM ISEMRI WHERE KODU = ISEMRIHAREKET.KODU) AS TALEPYEVMIYE, " +
+                            "(SELECT ONYYEVMIYE FROM ISEMRI WHERE KODU = ISEMRIHAREKET.KODU) AS ONAYLANANYEVMIYE " +
+                            "FROM ISEMRIHAREKET WHERE TIP = 3 AND GEMIKODU = @GEMIKODU GROUP BY KODU,MONTH(BASTARIH) " ,
+                    param : ['GEMIKODU'],
+                    type : ['string|25'],
+                    value:  [$scope.GemiKodu]
+                }
+                db.GetDataQuery(TmpQuery,async function(Data)
+                { 
+                    $scope.YevmiyeList = Data;
+                    $("#TblYevmiyeGrid").jsGrid({data : $scope.YevmiyeList}); 
+                });
+
+                //SÖZLEŞMELİ
+                var TmpQuery = 
+                {
+                    query : "SELECT " +
+                            "KODU AS KODU, " +
+                            "(SELECT ADI FROM ISEMRI WHERE KODU = ISEMRIHAREKET.KODU) AS ISEMRIADI, " +
+                            "MONTH(BASTARIH) AS TARIH, " +
+                            "COUNT(KODU) AS SOZLESMELI " +
+                            "FROM ISEMRIHAREKET WHERE TIP = 1 AND GEMIKODU = @GEMIKODU GROUP BY KODU,MONTH(BASTARIH) " ,
+                    param : ['GEMIKODU'],
+                    type : ['string|25'],
+                    value:  [$scope.GemiKodu]
+                }
+                db.GetDataQuery(TmpQuery,async function(Data)
+                { 
+                    $scope.SozlesmeliList = Data;
+                    $("#TblSozlesmeliGrid").jsGrid({data : $scope.SozlesmeliList}); 
+                });
             }
             else
             {
@@ -51,6 +326,10 @@ function IscilikOzetRapor($scope,$window,db)
     $scope.Yeni = async function()
     {
         Init();
+        InitYevmiyeGrid();
+        InitYevmiyeDetayGrid();
+        InitSozlesmeliGrid();
+        InitSozlesmeliDetayGrid();
 
         await GemiGetir();
     }
@@ -68,5 +347,55 @@ function IscilikOzetRapor($scope,$window,db)
         {
             alertify.alert("Lütfen Gemi Seçimi Yapınız.");
         }
+    }
+    $scope.YevmiyeListRowClick = function(pIndex,pItem,pObj)
+    {
+        if ( YevmiyeListRow ) { YevmiyeListRow.children('.jsgrid-cell').css('background-color', '').css('color',''); }
+        var $row = $("#TblIsEmriList").jsGrid("rowByItem", pItem);
+        $row.children('.jsgrid-cell').css('background-color','#2979FF').css('color','white');
+        YevmiyeListRow = $row;
+
+        var TmpQuery = 
+        {
+            query : "SELECT " +
+                    "KODU, " +
+                    "PERKODU, " +
+                    "CONVERT(VARCHAR,BASTARIH,102) AS TARIH, " +
+                    "(SELECT ADI FROM PERSONEL WHERE KODU = PERKODU) AS PERSONELADI " +
+                    "FROM ISEMRIHAREKET WHERE TIP = 3 AND KODU = @KODU AND MONTH(BASTARIH) = @TARIH " ,
+            param : ['KODU','TARIH'],
+            type : ['string|25','int'],
+            value:  [pItem.KODU,pItem.TARIH]
+        }
+        db.GetDataQuery(TmpQuery,async function(Data)
+        { 
+            $scope.YevmiyeDetayList = Data;
+            $("#TblYevmiyeDetay").jsGrid({data : $scope.YevmiyeDetayList}); 
+        });
+    }
+    $scope.SozlemeliListRowClick = function(pIndex,pItem,pObj)
+    {
+        if ( YevmiyeListRow ) { YevmiyeListRow.children('.jsgrid-cell').css('background-color', '').css('color',''); }
+        var $row = $("#TblIsEmriList").jsGrid("rowByItem", pItem);
+        $row.children('.jsgrid-cell').css('background-color','#2979FF').css('color','white');
+        YevmiyeListRow = $row;
+
+        var TmpQuery = 
+        {
+            query : "SELECT " +
+                    "KODU, " +
+                    "PERKODU, " +
+                    "CONVERT(VARCHAR,BASTARIH,102) AS TARIH, " +
+                    "(SELECT ADI FROM PERSONEL WHERE KODU = PERKODU) AS PERSONELADI " +
+                    "FROM ISEMRIHAREKET WHERE TIP = 1 AND KODU = @KODU AND MONTH(BASTARIH) = @TARIH " ,
+            param : ['KODU','TARIH'],
+            type : ['string|25','int'],
+            value:  [pItem.KODU,pItem.TARIH]
+        }
+        db.GetDataQuery(TmpQuery,async function(Data)
+        { 
+            $scope.SozlesmeliDetayList = Data;
+            $("#TblSozlesmeliDetay").jsGrid({data : $scope.SozlesmeliDetayList}); 
+        });
     }
 }
