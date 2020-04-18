@@ -90,7 +90,7 @@
         },
         rowDoubleClick: $.noop,
 
-        noDataContent: "Not found",
+        noDataContent: "Veri Bulunamadı",
         noDataRowClass: "jsgrid-nodata-row",
 
         heading: true,

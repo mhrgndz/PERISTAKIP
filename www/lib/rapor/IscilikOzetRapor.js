@@ -156,13 +156,6 @@ function IscilikOzetRapor($scope,$window,db)
             fields: 
             [
                 {
-                    name: "TARIH",
-                    title : "AY",
-                    type: "number",
-                    align: "center",
-                    width: 50
-                },
-                {
                     name: "KODU",
                     title : "KODU",
                     type: "number",
@@ -304,9 +297,8 @@ function IscilikOzetRapor($scope,$window,db)
                     query : "SELECT " +
                             "KODU AS KODU, " +
                             "(SELECT ADI FROM ISEMRI WHERE KODU = ISEMRIHAREKET.KODU) AS ISEMRIADI, " +
-                            "MONTH(BASTARIH) AS TARIH, " +
                             "COUNT(KODU) AS SOZLESMELI " +
-                            "FROM ISEMRIHAREKET WHERE TIP = 1 AND GEMIKODU = @GEMIKODU GROUP BY KODU,MONTH(BASTARIH) " ,
+                            "FROM ISEMRIHAREKET WHERE TIP = 1 AND GEMIKODU = @GEMIKODU GROUP BY KODU " ,
                     param : ['GEMIKODU'],
                     type : ['string|25'],
                     value:  [$scope.GemiKodu]
@@ -387,10 +379,10 @@ function IscilikOzetRapor($scope,$window,db)
                     "PERKODU, " +
                     "CONVERT(VARCHAR,BASTARIH,102) AS TARIH, " +
                     "(SELECT ADI FROM PERSONEL WHERE KODU = PERKODU) AS PERSONELADI " +
-                    "FROM ISEMRIHAREKET WHERE TIP = 1 AND KODU = @KODU AND MONTH(BASTARIH) = @TARIH " ,
-            param : ['KODU','TARIH'],
-            type : ['string|25','int'],
-            value:  [pItem.KODU,pItem.TARIH]
+                    "FROM ISEMRIHAREKET WHERE TIP = 1 AND KODU = @KODU  " ,
+            param : ['KODU'],
+            type : ['string|25'],
+            value:  [pItem.KODU]
         }
         db.GetDataQuery(TmpQuery,async function(Data)
         { 
