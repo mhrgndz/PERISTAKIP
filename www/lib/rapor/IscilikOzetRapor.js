@@ -340,6 +340,14 @@ function IscilikOzetRapor($scope,$window,db)
             alertify.alert("Lütfen Gemi Seçimi Yapınız.");
         }
     }
+    $scope.BtnYazdir = function()
+    {
+        var printContents = document.getElementById("A4").innerHTML;
+
+        document.body.innerHTML = printContents;
+        $window.print();
+        $window.location.reload();
+    }
     $scope.YevmiyeListRowClick = function(pIndex,pItem,pObj)
     {
         if ( YevmiyeListRow ) { YevmiyeListRow.children('.jsgrid-cell').css('background-color', '').css('color',''); }
