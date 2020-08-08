@@ -1,8 +1,9 @@
+
 {
     "port":"9091",
-    "server":"192.168.100.12",
+    "server":"MAHIR",
     "database":"PERISTAKIP",
-    "uid":"beka",
-    "pwd":"1122334455",
+    "uid":"mg",
+    "pwd":"123",
     "trustedConnection" : false
 }

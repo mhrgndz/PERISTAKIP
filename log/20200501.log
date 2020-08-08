@@ -1,0 +1,12 @@
+Error: listen EADDRINUSE: address already in use :::8080
+    at Server.setupListenHandle [as _listen2] (net.js:1313:16)
+    at listenInCluster (net.js:1361:12)
+    at Server.listen (net.js:1447:7)
+    at Function.listen (D:\Mahir Gündüz Projeler\PERISTAKIP\node_modules\express\lib\application.js:618:24)
+    at Object.<anonymous> (D:\Mahir Gündüz Projeler\PERISTAKIP\SERVER.js:8:5)
+    at Module._compile (internal/modules/cjs/loader.js:1147:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1167:10)
+    at Module.load (internal/modules/cjs/loader.js:996:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:896:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:71:12)
+------------------------------------------------------------------------------------------------------

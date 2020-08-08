@@ -11,12 +11,14 @@ var QuerySql =
     {
         query : "INSERT INTO PERSONEL " +
                 "([KODU] " +
-                ",[ADI]) " +
+                ",[ADI] " +
+                ",[TARIH]) " +
                 "VALUES " +
                 "(@KODU                 --<KODU, nvarchar(25),> \n" +
-                ",@ADI)                  --<ADI, nvarchar(50),> " ,
-        param : ['KODU','ADI'],
-        type : ['string|25','string|50']
+                ",@ADI                 --<ADI, nvarchar(50),> \n" +
+                ",@TARIH)                  --<ADI, nvarchar(50),> " ,
+        param : ['KODU','ADI','TARIH'],
+        type : ['string|25','string|50','date']
     },
     PersonelDelete :
     {
