@@ -3,7 +3,7 @@ var QuerySql =
     //PERSONELTANIMLAMA
     PersonelGetir : 
     {
-        query : "SELECT KODU AS KODU,ADI AS ADI FROM PERSONEL WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY KODU",
+        query : "SELECT KODU AS KODU,ADI AS ADI,CONVERT(NVARCHAR, TARIH, 102) AS TARIH FROM PERSONEL WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY TARIH DESC ",
         param : ['KODU'],
         type : ['string|25']
     },
@@ -15,10 +15,10 @@ var QuerySql =
                 ",[TARIH]) " +
                 "VALUES " +
                 "(@KODU                 --<KODU, nvarchar(25),> \n" +
-                ",@ADI                 --<ADI, nvarchar(50),> \n" +
-                ",@TARIH)                  --<ADI, nvarchar(50),> " ,
-        param : ['KODU','ADI','TARIH'],
-        type : ['string|25','string|50','date']
+                ",@ADI                  --<ADI, nvarchar(50),> \n" +
+                ",GETDATE())                  --<GETDATE, GETDATE(),> " ,
+        param : ['KODU','ADI'],
+        type : ['string|25','string|50']
     },
     PersonelDelete :
     {
@@ -34,8 +34,8 @@ var QuerySql =
                 "TLPYEVMIYE AS TLPYEVMIYE, " +
                 "ONYYEVMIYE AS ONYYEVMIYE, " +
                 "CASE WHEN TIP = 1 THEN 'SÖZLEŞMELİ' WHEN TIP = 2 THEN 'İLAVE' WHEN TIP = 3 THEN 'YEVMİYE' END AS ISTIP, " +
-                "(SELECT ADI FROM GEMI WHERE KODU = GEMIKODU) AS GEMIADI," +
-                "ADI AS ADI FROM ISEMRI WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY KODU",
+                "(SELECT ADI FROM GEMI WHERE KODU = GEMIKODU) AS GEMIADI, " +
+                "ADI AS ADI,CONVERT(NVARCHAR, TARIH, 102) AS TARIH FROM ISEMRI WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY TARIH DESC",
         param : ['KODU'],
         type : ['string|25']
     },
@@ -47,14 +47,16 @@ var QuerySql =
                 ",[GEMIKODU] " +
                 ",[TIP] " +
                 ",[TLPYEVMIYE] " +
-                ",[ONYYEVMIYE]) " +
+                ",[ONYYEVMIYE] " +
+                ",[TARIH]) " +
                 "VALUES " +
                 "(@KODU                 --<KODU, nvarchar(25),> \n" +
                 ",@ADI                  --<ADI, nvarchar(50),> \n" +
                 ",@GEMIKODU                  --<GEMIKODU, nvarchar(25),> \n" +
                 ",@TIP                  --<TIP, int,> \n" +
-                ",@TLPYEVMIYE                 --<TIP, int,> \n" +
-                ",@ONYYEVMIYE)                  --<TIP, int,> " ,
+                ",@TLPYEVMIYE                 --<TLPYEVMIYE, int,> \n" +
+                ",@ONYYEVMIYE               --<ONYYEVMIYE, int,> \n" +
+                ",GETDATE())                  --<TARIH, int,> " ,
         param : ['KODU','ADI','GEMIKODU','TIP','TLPYEVMIYE','ONYYEVMIYE'],
         type : ['string|25','string|50','string|25','int','int','int']
     },
@@ -138,7 +140,7 @@ var QuerySql =
     //GEMİ
     GemiGetir : 
     {
-        query : "SELECT KODU AS KODU,ADI AS ADI FROM GEMI WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY KODU",
+        query : "SELECT KODU AS KODU,ADI AS ADI,CONVERT(NVARCHAR, TARIH, 102) AS TARIH FROM GEMI WHERE ((KODU = @KODU) OR (@KODU = '')) ORDER BY TARIH DESC ",
         param : ['KODU'],
         type : ['string|25']
     },
@@ -146,10 +148,12 @@ var QuerySql =
     {
         query : "INSERT INTO GEMI " +
                 "([KODU] " +
-                ",[ADI]) " +
+                ",[ADI] " +
+                ",[TARIH]) " +
                 "VALUES " +
                 "(@KODU                 --<KODU, nvarchar(25),> \n" +
-                ",@ADI)                  --<ADI, nvarchar(50),> " ,
+                ",@ADI                  --<ADI, nvarchar(50),> \n" +
+                ",GETDATE())                  --<GETDATE, GETDATE(),> " ,
         param : ['KODU','ADI'],
         type : ['string|25','string|50']
     },

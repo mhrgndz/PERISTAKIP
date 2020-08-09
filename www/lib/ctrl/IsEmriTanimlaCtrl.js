@@ -82,6 +82,12 @@ function IsEmriTanimlaCtrl($scope,$window,db)
                     align: "center",
                     width: 100
                 },
+                {
+                    name: "TARIH",
+                    title: "TARIH",
+                    align: "center",
+                    width: 100
+                },
                 [
                     { 
                         itemTemplate: function(_, item) 
@@ -130,6 +136,12 @@ function IsEmriTanimlaCtrl($scope,$window,db)
                     type: "text",
                     align: "center",
                     width: 300
+                },
+                {
+                    name: "TARIH",
+                    type: "text",
+                    align: "center",
+                    width: 150
                 },
                 [
                     { 

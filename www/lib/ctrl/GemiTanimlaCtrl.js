@@ -37,6 +37,12 @@ function GemiTanimlaCtrl($scope,$window,db)
                     align: "center",
                     width: 300
                 },
+                {
+                    name: "TARIH",
+                    type: "text",
+                    align: "center",
+                    width: 150
+                },
                 [
                     { 
                         itemTemplate: function(_, item) 

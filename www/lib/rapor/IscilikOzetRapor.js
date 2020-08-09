@@ -362,7 +362,7 @@ function IscilikOzetRapor($scope,$window,db)
                     "PERKODU, " +
                     "CONVERT(VARCHAR,BASTARIH,102) AS TARIH, " +
                     "(SELECT ADI FROM PERSONEL WHERE KODU = PERKODU) AS PERSONELADI " +
-                    "FROM ISEMRIHAREKET WHERE TIP = 3 AND KODU = @KODU AND MONTH(BASTARIH) = @TARIH " ,
+                    "FROM ISEMRIHAREKET WHERE TIP = 3 AND KODU = @KODU AND MONTH(BASTARIH) = @TARIH ORDER BY TARIH DESC" ,
             param : ['KODU','TARIH'],
             type : ['string|25','int'],
             value:  [pItem.KODU,pItem.TARIH]
@@ -387,7 +387,7 @@ function IscilikOzetRapor($scope,$window,db)
                     "PERKODU, " +
                     "CONVERT(VARCHAR,BASTARIH,102) AS TARIH, " +
                     "(SELECT ADI FROM PERSONEL WHERE KODU = PERKODU) AS PERSONELADI " +
-                    "FROM ISEMRIHAREKET WHERE TIP = 1 AND KODU = @KODU  " ,
+                    "FROM ISEMRIHAREKET WHERE TIP = 1 AND KODU = @KODU ORDER BY TARIH DESC" ,
             param : ['KODU'],
             type : ['string|25'],
             value:  [pItem.KODU]
